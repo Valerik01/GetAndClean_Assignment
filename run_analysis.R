@@ -22,25 +22,22 @@ TestDataPathX <- "./data/UCI HAR Dataset/test/X_test.txt"
 # Reading train data
 trainingLabels <- read.table(TrainDataPathY)
 trainingSet <- read.table(TrainDataPathX)
+trainSubjects <- read.table("./data/UCI HAR Dataset/train/subject_train.txt")
 
-# Add subject
-trainingSet$subject <- trainingLabels$V1
-
-# Add type data - may be it will be usefull later
-trainingSet$type <- "train"
+# Add subjects and labels to train
+trainingSet$label <- trainingLabels$V1
+trainingSet$subject <- trainSubjects$V1
 
 # Reading test data
 testLabels <- read.table(TestDataPathY)
 testSet <- read.table(TestDataPathX)
+testSubjects <- read.table("./data/UCI HAR Dataset/test/subject_test.txt")
 
-# Add subject
-testSet$subject <- testLabels$V1
-
-# Add type data - may be it will be usefull later
-testSet$type <- "test"
+# Add subjects and labels
+testSet$label <- testLabels$V1
+testSet$subject <- testSubjects$V1
 
 labels <- read.table("./data/UCI HAR Dataset/features.txt", stringsAsFactors = FALSE)
-str(labels[2])
 
 # 1. Binding two datasets
 data <- rbind(trainingSet, testSet)
@@ -52,23 +49,23 @@ rm(trainingSet)
 rm(trainingLabels)
 
 # 3. Name columns
-names(data) <- c(labels$V2, "subject", "type")
+names(data) <- c(labels$V2, "label", "subject")
+
 
 # 4. Merging with activity labels
 activity_labels <- read.table("./data/UCI HAR Dataset/activity_labels.txt", stringsAsFactors = FALSE)
-data <- merge(data, activity_labels, by.x = "subject", by.y = "V1", all = TRUE)
-
-# Change new column name
-colnames(data)[564] <- "activity"
+colnames(activity_labels) <- c("label", "activity")
+data <- merge(data, activity_labels, by = "label")
 data$activity <- as.factor(data$activity)
 
 # 2. Extract only mean and std from data by labels
-mean_std_data <- data[, c(labels[grepl("mean", labels$V2)|grepl("std", labels$V2),]$V2, "activity")]
+mean_std_data <- data[, c(labels[grepl("mean", labels$V2)|grepl("std", labels$V2),]$V2, "subject", "activity")]
 
 # 5. grouped dataset
-gr_data <- mean_std_data %>% group_by(activity) %>% summarize_all(mean)
+gr_data <- mean_std_data %>% group_by(activity, subject) %>% summarize_all(mean)
 
-
+write.table(gr_data, file = "output.txt", row.names = FALSE)
+summary(gr_data)
 
 
 
