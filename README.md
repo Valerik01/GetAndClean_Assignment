@@ -15,10 +15,9 @@ Columns names are "label" and "subject"
 
 6: Read test data from file
 
-7: Add subjects and labels to main test data
-Columns names are "label" and "subject"
+7: Add subjects and labels to main test data. Columns names are "label" and "subject"
 
-8. Bind training and test datasets
+8: Bind training and test datasets
 
 9: Read features file
 
