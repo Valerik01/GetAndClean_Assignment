@@ -1,15 +1,43 @@
-# GetAndClean_Assignment
 Coursera, get and clean data, course project
 
-We have to download data, with checking existing directories
+1: Add path to file
+"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-First we merge test and train data, and get column names from separate file (file "features.txt") as "labels" dataset
+2: Check if exist folder "data"
+Create it if it doesn't exist
 
-We set descriptive variable names to dataset "data", add an activity column with values from y_train and y_test, and merge data with activity_labels for getting string activity names and use it as factor
+3: Check if exist file "data.zip" - if doesn't - it means we have to download it and unpack
 
-By grepl We reveal all column names which consists with "std" and "mean" words and create new data set mean_std_data
+4: Read training data from file
 
-At last we group mean_std_data by activity and get mean value for all columns
+5: Add subjects and labels to main training data
+Columns names are "label" and "subject"
+
+6: Read test data from file
+
+7: Add subjects and labels to main test data
+Columns names are "label" and "subject"
+
+8. Bind training and test datasets
+
+9: Read features file
+
+10: Removing unnecessary big datasets (not necessarily but possible)
+
+11: Change columns names
+
+12: Read activity labels
+
+13: Assign col names
+
+14: Merge our main dataset with activity and change "activity" column to factor
+
+15: Extract only mean and std from data by labels
+
+16: Get grouped dataset
+
+17: Write output.txt file from main grouped dataset
+
 
 
 
