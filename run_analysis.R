@@ -59,7 +59,7 @@ common.data <- merge(common.data, activity.labels, by = "label")
 common.data$activity <- as.factor(common.data$activity)
 
 # 15: Extract only mean and std from data by labels
-mean_std.data <- common.data[, c(features[grepl("mean", features$V2)|grepl("std", features$V2),]$V2, "subject", "activity")]
+mean_std.data <- common.data[, c(features[grep("mean\\(\\)|std\\(\\)", features$V2),]$V2, "subject", "activity")]
 
 # 16: Get grouped dataset
 grouped.data <- mean_std.data %>% group_by(activity, subject) %>% summarize_all(mean)
